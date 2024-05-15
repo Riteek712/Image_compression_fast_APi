@@ -1,10 +1,8 @@
 import json
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
-from compression import compress_image, decompress_image
+from compression import compress_image
 from work import compress_image_k, decompress_image_k
-from schemas import ImageCompressionResponse
 from io import BytesIO
 from PIL import Image
 import base64
@@ -51,10 +49,6 @@ async def compress_image_endpoint(file: UploadFile = File(...), k: int = 16):
         'ncc': ncc,
         # 'ssim_value': ssim_value
     }
-
-
-class DecompressRequest(BaseModel):
-    json_file: UploadFile
 
 @app.post("/decompress")
 async def decompress_image_endpoint(file: UploadFile = File(...)):
